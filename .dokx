@@ -1,0 +1,6 @@
+return {
+    mathematics = false,
+    githubURL = 'akfidjeland/logroll',
+    includeLocal = false,
+    includePrivate = false
+}
