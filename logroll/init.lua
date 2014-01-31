@@ -42,7 +42,7 @@ local function make_logger(file, options)
                     file      = file,
                     formatter = options.formatter or default_formatter,
                     writer    = options.writer or default_writer,
-                    level     = logroll[DEFAULT_LEVEL]
+                    level     = options.level or logroll[DEFAULT_LEVEL],
                 }
 
     return fn.reduce(function(lg, level)
@@ -52,6 +52,12 @@ local function make_logger(file, options)
     logger, LOG_LEVELS)
 end
 
+-- A no-op logger
+function logroll.null_logger()
+    local noop = function(...) end
+    local options = {formatter = noop, writer = noop}
+    return make_logger(nil, options)
+end
 
 -- A simple logger to print to STDIO.
 function logroll.print_logger(options)
@@ -93,3 +99,15 @@ function logroll.combine(...)
 
     return joint
 end
+
+-- Setup logging functions accessible globally through logroll
+function logroll.set_global_logger(logger)
+    for _,level in ipairs(LOG_LEVELS) do
+        local fname = string.lower(level)
+        logroll[fname] = logger[fname]
+    end
+end
+
+-- Default to a print logger
+logroll.set_global_logger(logroll.print_logger())
+
