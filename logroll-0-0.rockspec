@@ -11,7 +11,7 @@ description = {
     homepage = "https://github.com/akfidjeland/logroll.git"
 }
 
-dependencies = { 'torch >= 7.0', 'fn', 'paths', 'util', 'pprint'}
+dependencies = { 'torch >= 7.0', 'fn', 'paths', 'pprint'}
 build = {
     type = "builtin",
     modules = {
