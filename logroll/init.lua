@@ -33,6 +33,7 @@ end
 local function default_writer(logger, level, ...)
     if level >= logger.level then
         logger.file:write(logger.formatter(level, unpack({...})))
+        logger.file:flush()
     end
 end
 
